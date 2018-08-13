@@ -3,21 +3,11 @@ import GoalModal from './GoalModal';
 
 const Goal = (props) => (
     <div>
-        <button 
-            onClick={props.handleOpenModal}
-        >
-            <GoalModal
-                showModal={props.showModal}
-                handleCloseModal={props.handleCloseModal}
-            />
-            {props.count}. {props.goalText}</button>
-        <button 
-            onClick={(e) => {
-            props.handleDeleteGoal(props.goalText);
-        }}
-        >
-         remove
+        <GoalModal showModal={props.showModal} handleCloseModal={props.handleCloseModal} />
+        <button onClick={(e) => { props.handleDeleteGoal(props.goalText); }}>
+            {props.count}. {props.goalText}
         </button>
+        <button onClick={props.handleOpenModal}>remove</button>
     </div>
 );
 
