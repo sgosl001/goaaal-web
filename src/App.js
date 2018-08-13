@@ -3,11 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 import Goals from './components/Goals';
 
+//TODO add modal for each separate goal
+//TODO add array for goal steps
+//TODO create percentage for goal completion
 
 class App extends Component {
-  state = {
-    goal: "",
-    goals: []
+  constructor() {
+    super();  
+    this.state = {
+      goal: "",
+      goals: [],
+      showModal: false
+      };
+
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+
+
+  handleDeleteGoal = (goalToRemove) => {
+    this.setState((prevState) => ({
+      goals: prevState.goals.filter((goal) => goalToRemove !== goal)
+    }));
   };
 
   handleSubmit = (e) => {
@@ -20,8 +37,17 @@ class App extends Component {
     const value = e.target.value;
     this.setState(() => ({goal: value}));
   }
+
+  handleOpenModal () {
+    this.setState({showModal: true});
+  }
+
+  handleCloseModal () {
+    this.setState({showModal: false});
+  }
   
   render() {
+    console.log(this.state.showModal);
     return (
       <div className="App">
         <header className="App-header">
@@ -37,6 +63,10 @@ class App extends Component {
         </form>
         <Goals
           goals={this.state.goals}
+          handleDeleteGoal={this.handleDeleteGoal}
+          handleOpenModal={this.handleOpenModal}
+          handleCloseModal={this.handleCloseModal}
+          showModal={this.state.showModal}
         />
       </div>
     );
