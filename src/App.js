@@ -39,10 +39,13 @@ class App extends Component {
   }
 
   handleOpenModal () {
+    console.log('in open modal button click');
     this.setState({showModal: true});
   }
 
-  handleCloseModal () {
+  handleCloseModal (e) {
+    console.log('in CLOSE modal button click');
+    e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
     this.setState({showModal: false});
   }
   
