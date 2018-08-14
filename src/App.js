@@ -8,18 +8,11 @@ import Goals from './components/Goals';
 //TODO create percentage for goal completion
 
 class App extends Component {
-  constructor() {
-    super();  
-    this.state = {
+  state = {
       goal: "",
       goals: [],
       showModal: false
-      };
-
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-  }
-
+  };
 
   handleDeleteGoal = (goalToRemove) => {
     this.setState((prevState) => ({
@@ -38,14 +31,14 @@ class App extends Component {
     this.setState(() => ({goal: value}));
   }
 
-  handleOpenModal () {
+  handleOpenModal = () => {
     console.log('in open modal button click');
     this.setState({showModal: true});
   }
 
-  handleCloseModal (e) {
+  handleCloseModal = () => {
     console.log('in CLOSE modal button click');
-    e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
+    //e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
     this.setState({showModal: false});
   }
   
