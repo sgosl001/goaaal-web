@@ -3,15 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 import Goals from './components/Goals';
 
-//TODO add modal for each separate goal
 //TODO add array for goal steps
 //TODO create percentage for goal completion
+//TODO add alerts
+//TODO local storage for subgoals
 
 class App extends Component {
   state = {
       goal: "",
       goals: [],
-      showModal: false
+      isModalVisible: false
   };
 
   handleDeleteGoal = (goalToRemove) => {
@@ -33,17 +34,57 @@ class App extends Component {
 
   handleOpenModal = () => {
     console.log('in open modal button click');
-    this.setState({showModal: true});
+    this.setState({isModalVisible: true});
   }
 
   handleCloseModal = () => {
     console.log('in CLOSE modal button click');
     //e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
-    this.setState({showModal: false});
+    this.setState({isModalVisible: false});
+  }
+
+  saveStateToLocalStorage() {
+    for (let key in this.state) {
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  }
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('goals');
+      const goals = JSON.parse(json);
+
+      if (goals) {
+        this.setState(() => ({ goals }));
+      }
+    } catch (e) {
+      //do nothing
+    }
+
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.goals.length !== this.state.goals.length) {
+      const json = JSON.stringify(this.state.goals);
+      localStorage.setItem('goals', json);
+    }
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    this.saveStateToLocalStorage();
   }
   
   render() {
-    console.log(this.state.showModal);
+    console.log(this.state.isModalVisible);
     return (
       <div className="App">
         <header className="App-header">
@@ -62,7 +103,8 @@ class App extends Component {
           handleDeleteGoal={this.handleDeleteGoal}
           handleOpenModal={this.handleOpenModal}
           handleCloseModal={this.handleCloseModal}
-          showModal={this.state.showModal}
+          isModalVisible={this.state.isModalVisible}
+          handleSubmit={this.handleSubmit}
         />
       </div>
     );
