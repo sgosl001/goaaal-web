@@ -11,6 +11,11 @@ const Goals = (props) => (
                     key={goal}
                     goalText={goal}
                     count={index + 1}
+                    handleDeleteGoal={props.handleDeleteGoal}
+                    isModalVisible={props.isModalVisible}
+                    handleOpenModal={props.handleOpenModal}
+                    handleCloseModal={props.handleCloseModal}
+                    handleSubmit={props.handleSubmit}
                 />
             ))
         }
