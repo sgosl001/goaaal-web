@@ -9,12 +9,12 @@ class Goal extends React.Component {
     }
 
     render() {
-        const { count, subGoal, subGoals, goalText, handleOpenModal, isModalVisible, handleCloseModal, handleSubGoalChange, handleSubGoalSubmit } = this.props;
+        const { count, goalText, handleOpenModal, isModalVisible, handleCloseModal, handleSubGoalChange, handleSubGoalSubmit } = this.props;
         return (
             <div>
                 <GoalModal
-                    subGoal={subGoal}
-                    subGoals={subGoals}
+                    subGoal={this.state.subGoal}
+                    subGoals={this.state.subGoals}
                     isModalVisible={isModalVisible}
                     handleOpenModal={handleOpenModal}
                     handleCloseModal={handleCloseModal} 
@@ -53,6 +53,7 @@ class Goal extends React.Component {
         try {
             const json = localStorage.getItem('subGoals');
             const subGoals = JSON.parse(json);
+            console.log("subgoal mounted")
       
             if (subGoals) {
               this.setState(() => ({ subGoals }));
