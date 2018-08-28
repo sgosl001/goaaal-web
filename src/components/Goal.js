@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-modal';
-import GoalModal from './GoalModal';
 
 class Goal extends React.Component {
     state = {
@@ -9,41 +8,36 @@ class Goal extends React.Component {
     }
 
     render() {
-        const { count, goalText, handleOpenModal, isModalVisible, handleCloseModal, handleSubGoalChange, handleSubGoalSubmit } = this.props;
+        const { count, id, subGoals, goalText} = this.props;
         return (
             <div>
-                <GoalModal
-                    subGoal={this.state.subGoal}
-                    subGoals={this.state.subGoals}
-                    isModalVisible={isModalVisible}
-                    handleOpenModal={handleOpenModal}
-                    handleCloseModal={handleCloseModal} 
-                    handleSubGoalChange={handleSubGoalChange}
-                    handleSubGoalSubmit={handleSubGoalSubmit}
-                />
-                <button onClick={handleOpenModal}>
+                <div onClick={this.handleClick}>
                     {count}. {goalText}
-                </button>
+                </div>
                 <button onClick={this.handleRemoveClick}>remove</button>
             </div>
         );
     }
     
     handleRemoveClick = () => {
-        const { handleDeleteGoal, goalText } = this.props;
-        handleDeleteGoal(goalText);
+        const { handleDeleteGoal, id } = this.props;
+        handleDeleteGoal(id);
     }
 
-    handleSubGoalSubmit = (e) => {
-        e.preventDefault() 
-        this.setState((prevState) => ({ subGoals: prevState.subGoals.concat(this.state.subGoal) }));
-        this.setState(() => ({ subGoal: '' }));
+    handleClick = () => {
+        this.props.handleSelectGoal(this.props.id);
     }
+
+    // handleSubGoalSubmit = (e) => {
+    //     e.preventDefault() 
+    //     this.setState((prevState) => ({ subGoals: prevState.subGoals.concat(this.state.subGoal) }));
+    //     this.setState(() => ({ subGoal: '' }));
+    // }
     
-    handleSubGoalChange = (e) => {
-        const value = e.target.value;
-        this.setState(() => ({subGoal: value}));
-    }
+    // handleSubGoalChange = (e) => {
+    //     const value = e.target.value;
+    //     this.setState(() => ({subGoal: value}));
+    // }
 
     componentWillMount(){
         Modal.setAppElement('body');
@@ -53,7 +47,6 @@ class Goal extends React.Component {
         try {
             const json = localStorage.getItem('subGoals');
             const subGoals = JSON.parse(json);
-            console.log("subgoal mounted")
       
             if (subGoals) {
               this.setState(() => ({ subGoals }));

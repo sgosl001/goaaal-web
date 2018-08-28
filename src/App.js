@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import uuid from 'uuid/v4';
 import Goals from './components/Goals';
+import GoalModal from './components/GoalModal';
 
 //TODO add array for goal steps
 //TODO create percentage for goal completion
@@ -10,20 +12,25 @@ import Goals from './components/Goals';
 
 class App extends Component {
   state = {
-      goal: "",
+      goal: '',
       goals: [],
+      selectedGoal: '',
       isModalVisible: false
   };
 
-  handleDeleteGoal = (goalToRemove) => {
+  handleDeleteGoal = (id) => {
     this.setState((prevState) => ({
-      goals: prevState.goals.filter((goal) => goalToRemove !== goal)
+      goals: prevState.goals.filter((goal) => goal.id !== id)
     }));
   };
 
   handleSubmit = (e) => {
     e.preventDefault() 
-    this.setState((prevState) => ({ goals: prevState.goals.concat(this.state.goal) }));
+    this.setState((prevState) => ({ goals: prevState.goals.concat({
+      goalText: this.state.goal,
+      id: uuid(),
+      subGoals: []
+    }) }));
     this.setState(() => ({ goal: '' }));
   }
 
@@ -49,6 +56,13 @@ class App extends Component {
     }
   }
 
+  selectGoal = (id) => {
+    const selectedGoal = this.state.goals.find((goal) => {
+      return goal.id === id;
+    });
+    this.setState(() => ({ selectedGoal }));
+  }
+
   componentDidMount() {
     try {
       const json = localStorage.getItem('goals');
@@ -60,11 +74,6 @@ class App extends Component {
     } catch (e) {
       //do nothing
     }
-
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -74,14 +83,7 @@ class App extends Component {
     }
   }
 
-  componentWillUnmount(){
-    window.removeEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
-
-    this.saveStateToLocalStorage();
-  }
+  componentWillUnmount(){}
   
   render() {
     console.log(this.state.isModalVisible);
@@ -101,10 +103,12 @@ class App extends Component {
         <Goals
           goals={this.state.goals}
           handleDeleteGoal={this.handleDeleteGoal}
-          handleOpenModal={this.handleOpenModal}
-          handleCloseModal={this.handleCloseModal}
-          isModalVisible={this.state.isModalVisible}
+          handleSelectGoal={this.selectGoal}
           handleSubmit={this.handleSubmit}
+        />
+        <GoalModal
+          isModalVisible={!!this.state.selectedGoal}
+          selectedGoal={this.state.selectedGoal}
         />
       </div>
     );
