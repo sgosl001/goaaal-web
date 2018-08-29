@@ -11,7 +11,7 @@ class GoalModal extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        
+        this.props.addSubGoal(this.props.selectedGoal.id, e);
 
         this.setState(() => ({
             subGoal: ''
@@ -37,10 +37,10 @@ class GoalModal extends React.Component {
                             type="text" 
                             name="subgoal" 
                             value={this.state.subGoal}
-                            onChange={this.handleSubGoalChange}
+                            onChange={this.handleSubGoalsChange}
                             placeholder="type a subgoal..."
                         />
-                        <button onClick={() => this.props.addSubGoal(this.props.selectedGoal.id, this.sub)}>add subgoal</button>
+                        <button>add subgoal</button>
                     </form>
 
                     <div>

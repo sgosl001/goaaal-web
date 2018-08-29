@@ -66,7 +66,7 @@ class App extends Component {
       if (goal.id === id) {
         return {
           ...goal,
-          subgoals: [...goal.subgoals, subgoal]
+          subGoals: [...goal.subGoals, subgoal]
         };
       } else {
         return goal
@@ -113,7 +113,12 @@ class App extends Component {
           To get started, add a goal.
         </p>
         <form onSubmit={this.handleSubmit}>
-            <input type="text" name="goal" value={this.state.goal} onChange={this.handleChange}/>
+            <input 
+              type="text" 
+              name="goal" 
+              value={this.state.goal} 
+              onChange={this.handleChange}
+            />
             <button>Add Goal</button>
         </form>
         <Goals
