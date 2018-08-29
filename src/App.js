@@ -63,6 +63,7 @@ class App extends Component {
 
   addSubGoal = (id, subgoal) => {
     const nextGoals = this.state.goals.map((goal) => {
+      console.log(subgoal)
       if (goal.id === id) {
         return {
           ...goal,
