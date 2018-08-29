@@ -2,11 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 
 class Goal extends React.Component {
-    state = {
-        subGoal: "",
-        subGoals: []
-    }
-
     render() {
         const { count, id, subGoals, goalText} = this.props;
         return (
@@ -27,17 +22,6 @@ class Goal extends React.Component {
     handleClick = () => {
         this.props.handleSelectGoal(this.props.id);
     }
-
-    // handleSubGoalSubmit = (e) => {
-    //     e.preventDefault() 
-    //     this.setState((prevState) => ({ subGoals: prevState.subGoals.concat(this.state.subGoal) }));
-    //     this.setState(() => ({ subGoal: '' }));
-    // }
-    
-    // handleSubGoalChange = (e) => {
-    //     const value = e.target.value;
-    //     this.setState(() => ({subGoal: value}));
-    // }
 
     componentWillMount(){
         Modal.setAppElement('body');

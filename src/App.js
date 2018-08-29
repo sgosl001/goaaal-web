@@ -5,10 +5,8 @@ import uuid from 'uuid/v4';
 import Goals from './components/Goals';
 import GoalModal from './components/GoalModal';
 
-//TODO add array for goal steps
 //TODO create percentage for goal completion
 //TODO add alerts
-//TODO local storage for subgoals
 
 class App extends Component {
   state = {
@@ -29,7 +27,8 @@ class App extends Component {
     this.setState((prevState) => ({ goals: prevState.goals.concat({
       goalText: this.state.goal,
       id: uuid(),
-      subGoals: []
+      subGoals: [],
+      subGoal: ''
     }) }));
     this.setState(() => ({ goal: '' }));
   }
@@ -63,6 +62,25 @@ class App extends Component {
     this.setState(() => ({ selectedGoal }));
   }
 
+  addSubGoal = (id, subgoal) => {
+    const nextGoals = this.state.goals.map((goal) => {
+      if (goal.id === id) {
+        return {
+          ...goal,
+          subgoals: [...goal.subgoals, subgoal]
+        };
+      } else {
+        return goal
+      }
+    });
+
+    this.setState(() => ({goals: nextGoals}));
+  }
+
+  closeModal = () => {
+    this.setState(() => ({ selectedGoal: '' }) );
+  }
+
   componentDidMount() {
     try {
       const json = localStorage.getItem('goals');
@@ -86,7 +104,6 @@ class App extends Component {
   componentWillUnmount(){}
   
   render() {
-    console.log(this.state.isModalVisible);
     return (
       <div className="App">
         <header className="App-header">
@@ -109,6 +126,8 @@ class App extends Component {
         <GoalModal
           isModalVisible={!!this.state.selectedGoal}
           selectedGoal={this.state.selectedGoal}
+          closeModal={this.closeModal}
+          addSubGoal={this.addSubGoal}
         />
       </div>
     );
