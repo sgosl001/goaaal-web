@@ -1,23 +1,55 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-const GoalModal = (props) => (
-    <Modal
-        isOpen={props.isModalVisible}
-        contentLabel="test"
-    >
-        <div>
-            <h1> {props.selectedGoal.goalText} </h1>
 
-            <form>
-                <input type="text" name="subgoal" value={props.selectedGoal.subGoal}/>
-                <button onClick={() => props.addSubGoal(props.selectedGoal.id, props.selectedGoal.subgoal)}>add subgoal</button>
-            </form>
+class GoalModal extends React.Component {
+    
+    state = {
+        subGoal: ''
+    }
 
-            <div>
-                <button onClick={() => props.closeModal()}> X </button>
-            </div>
-        </div>
-    </Modal>
-)
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        
+
+        this.setState(() => ({
+            subGoal: ''
+        }));
+    }
+
+    handleSubGoalsChange = (e) => {
+        const newValue = e.target.value;
+        this.setState(() => ({subGoal: newValue}))
+    }
+
+    render() {
+        return(
+            <Modal
+            isOpen={this.props.isModalVisible}
+            contentLabel="test"
+            >
+                <div>
+                    <h1> {this.props.selectedGoal.goalText} </h1>
+
+                    <form onSubmit={this.handleSubmit}>
+                        <input 
+                            type="text" 
+                            name="subgoal" 
+                            value={this.state.subGoal}
+                            onChange={this.handleSubGoalChange}
+                            placeholder="type a subgoal..."
+                        />
+                        <button onClick={() => this.props.addSubGoal(this.props.selectedGoal.id, this.sub)}>add subgoal</button>
+                    </form>
+
+                    <div>
+                        <button onClick={() => this.props.closeModal()}> X </button>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }
+}
+
 export default GoalModal;

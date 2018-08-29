@@ -27,8 +27,7 @@ class App extends Component {
     this.setState((prevState) => ({ goals: prevState.goals.concat({
       goalText: this.state.goal,
       id: uuid(),
-      subGoals: [],
-      subGoal: ''
+      subGoals: []
     }) }));
     this.setState(() => ({ goal: '' }));
   }
