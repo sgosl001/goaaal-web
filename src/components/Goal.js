@@ -1,48 +1,26 @@
 import React from 'react';
 import Modal from 'react-modal';
-import GoalModal from './GoalModal';
 
 class Goal extends React.Component {
-    state = {
-        subGoal: "",
-        subGoals: []
-    }
-
     render() {
-        const { count, subGoal, subGoals, goalText, handleOpenModal, isModalVisible, handleCloseModal, handleSubGoalChange, handleSubGoalSubmit } = this.props;
+        const { count, id, subGoals, goalText} = this.props;
         return (
             <div>
-                <GoalModal
-                    subGoal={subGoal}
-                    subGoals={subGoals}
-                    isModalVisible={isModalVisible}
-                    handleOpenModal={handleOpenModal}
-                    handleCloseModal={handleCloseModal} 
-                    handleSubGoalChange={handleSubGoalChange}
-                    handleSubGoalSubmit={handleSubGoalSubmit}
-                />
-                <button onClick={handleOpenModal}>
+                <div onClick={this.handleClick}>
                     {count}. {goalText}
-                </button>
+                </div>
                 <button onClick={this.handleRemoveClick}>remove</button>
             </div>
         );
     }
     
     handleRemoveClick = () => {
-        const { handleDeleteGoal, goalText } = this.props;
-        handleDeleteGoal(goalText);
+        const { handleDeleteGoal, id } = this.props;
+        handleDeleteGoal(id);
     }
 
-    handleSubGoalSubmit = (e) => {
-        e.preventDefault() 
-        this.setState((prevState) => ({ subGoals: prevState.subGoals.concat(this.state.subGoal) }));
-        this.setState(() => ({ subGoal: '' }));
-    }
-    
-    handleSubGoalChange = (e) => {
-        const value = e.target.value;
-        this.setState(() => ({subGoal: value}));
+    handleClick = () => {
+        this.props.handleSelectGoal(this.props.id);
     }
 
     componentWillMount(){

@@ -1,25 +1,28 @@
 import React from 'react';
 import Goal from './Goal';
 
-const Goals = (props) => (
-    <div>
-        <h2> Your Goals </h2>
-        {props.goals.length === 0 && <p> Please Add a Goal </p> }
-        {
-            props.goals.map((goal, index) => (
-                <Goal
-                    key={goal}
-                    goalText={goal}
-                    count={index + 1}
-                    handleDeleteGoal={props.handleDeleteGoal}
-                    isModalVisible={props.isModalVisible}
-                    handleOpenModal={props.handleOpenModal}
-                    handleCloseModal={props.handleCloseModal}
-                    handleSubmit={props.handleSubmit}
-                />
-            ))
-        }
-    </div>
-)
+class Goals extends React.Component {
+
+    render() {
+        return (
+            <div>
+                <h2> Your Goals </h2>
+                {this.props.goals.length === 0 && <p> Please Add a Goal </p> }
+                {
+                    this.props.goals.map((goalObj, index) => (
+                        <Goal
+                            key={goalObj.id}
+                            {...goalObj}
+                            count={index + 1}
+                            handleDeleteGoal={this.props.handleDeleteGoal}
+                            handleSubmit={this.props.handleSubmit}
+                            handleSelectGoal={this.props.handleSelectGoal}
+                        />
+                    ))
+                }
+            </div>
+        )
+    }
+}
 
 export default Goals;

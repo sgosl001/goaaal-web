@@ -1,29 +1,35 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import uuid from 'uuid/v4';
 import Goals from './components/Goals';
+import GoalModal from './components/GoalModal';
+import SimpleStorage from "react-simple-storage";
 
-//TODO add array for goal steps
 //TODO create percentage for goal completion
 //TODO add alerts
-//TODO local storage for subgoals
 
 class App extends Component {
   state = {
-      goal: "",
+      goal: '',
       goals: [],
+      selectedGoal: '',
       isModalVisible: false
   };
 
-  handleDeleteGoal = (goalToRemove) => {
+  handleDeleteGoal = (id) => {
     this.setState((prevState) => ({
-      goals: prevState.goals.filter((goal) => goalToRemove !== goal)
+      goals: prevState.goals.filter((goal) => goal.id !== id)
     }));
   };
 
   handleSubmit = (e) => {
     e.preventDefault() 
-    this.setState((prevState) => ({ goals: prevState.goals.concat(this.state.goal) }));
+    this.setState((prevState) => ({ goals: prevState.goals.concat({
+      goalText: this.state.goal,
+      id: uuid(),
+      subGoals: []
+    }) }));
     this.setState(() => ({ goal: '' }));
   }
 
@@ -32,79 +38,70 @@ class App extends Component {
     this.setState(() => ({goal: value}));
   }
 
-  handleOpenModal = () => {
-    console.log('in open modal button click');
-    this.setState({isModalVisible: true});
+  selectGoal = (id) => {
+    const selectedGoal = this.state.goals.find((goal) => {
+      return goal.id === id;
+    });
+    this.setState(() => ({ selectedGoal }));
   }
 
-  handleCloseModal = () => {
-    console.log('in CLOSE modal button click');
-    //e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
-    this.setState({isModalVisible: false});
-  }
-
-  saveStateToLocalStorage() {
-    for (let key in this.state) {
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
-    }
-  }
-
-  componentDidMount() {
-    try {
-      const json = localStorage.getItem('goals');
-      const goals = JSON.parse(json);
-
-      if (goals) {
-        this.setState(() => ({ goals }));
+  addSubGoal = (id, subgoal) => {
+    let selectedGoal;
+    const nextGoals = this.state.goals.map((goal) => {
+      if (goal.id === id) {
+        selectedGoal = goal;
+        return {
+          ...goal,
+          subGoals: [...goal.subGoals, subgoal]
+        };
+      } else {
+        return goal;
       }
-    } catch (e) {
-      //do nothing
-    }
+    });
 
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
+    this.setState(() => ({
+        goals: [ ...nextGoals ],
+        selectedGoal
+      }));
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.goals.length !== this.state.goals.length) {
-      const json = JSON.stringify(this.state.goals);
-      localStorage.setItem('goals', json);
-    }
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
-
-    this.saveStateToLocalStorage();
+  closeModal = () => {
+    this.setState(() => ({ selectedGoal: '' }) );
   }
   
   render() {
-    console.log(this.state.isModalVisible);
+    const isEnabled = this.state.goal.length > 0;
     return (
       <div className="App">
+        <SimpleStorage parent={this}/>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Goaaal</h1>
         </header>
-        <p className="App-intro">
+        <p className="App-intro" hidden={this.state.goals.length > 0}>
           To get started, add a goal.
         </p>
         <form onSubmit={this.handleSubmit}>
-            <input type="text" name="goal" value={this.state.goal} onChange={this.handleChange}/>
-            <button>Add Goal</button>
+            <input 
+              type="text" 
+              name="goal" 
+              value={this.state.goal} 
+              onChange={this.handleChange}
+              placeholder="type a goal..."
+            />
+            <button disabled={!isEnabled}>Add Goal</button>
         </form>
         <Goals
           goals={this.state.goals}
           handleDeleteGoal={this.handleDeleteGoal}
-          handleOpenModal={this.handleOpenModal}
-          handleCloseModal={this.handleCloseModal}
-          isModalVisible={this.state.isModalVisible}
+          handleSelectGoal={this.selectGoal}
           handleSubmit={this.handleSubmit}
+        />
+        <GoalModal
+          isModalVisible={!!this.state.selectedGoal}
+          selectedGoal={this.state.selectedGoal}
+          closeModal={this.closeModal}
+          addSubGoal={this.addSubGoal}
         />
       </div>
     );
