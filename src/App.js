@@ -4,6 +4,7 @@ import './App.css';
 import uuid from 'uuid/v4';
 import Goals from './components/Goals';
 import GoalModal from './components/GoalModal';
+import SimpleStorage from "react-simple-storage";
 
 //TODO create percentage for goal completion
 //TODO add alerts
@@ -37,23 +38,6 @@ class App extends Component {
     this.setState(() => ({goal: value}));
   }
 
-  handleOpenModal = () => {
-    console.log('in open modal button click');
-    this.setState({isModalVisible: true});
-  }
-
-  handleCloseModal = () => {
-    console.log('in CLOSE modal button click');
-    //e.stopPropagation(); // blocks click from bubbling to parent button which is in parent
-    this.setState({isModalVisible: false});
-  }
-
-  saveStateToLocalStorage() {
-    for (let key in this.state) {
-      localStorage.setItem(key, JSON.stringify(this.state[key]));
-    }
-  }
-
   selectGoal = (id) => {
     const selectedGoal = this.state.goals.find((goal) => {
       return goal.id === id;
@@ -62,55 +46,39 @@ class App extends Component {
   }
 
   addSubGoal = (id, subgoal) => {
+    let selectedGoal;
     const nextGoals = this.state.goals.map((goal) => {
-      console.log(subgoal)
       if (goal.id === id) {
+        selectedGoal = goal;
         return {
           ...goal,
           subGoals: [...goal.subGoals, subgoal]
         };
       } else {
-        return goal
+        return goal;
       }
     });
 
-    this.setState(() => ({goals: nextGoals}));
+    this.setState(() => ({
+        goals: [ ...nextGoals ],
+        selectedGoal
+      }));
   }
 
   closeModal = () => {
     this.setState(() => ({ selectedGoal: '' }) );
   }
-
-  componentDidMount() {
-    try {
-      const json = localStorage.getItem('goals');
-      const goals = JSON.parse(json);
-
-      if (goals) {
-        this.setState(() => ({ goals }));
-      }
-    } catch (e) {
-      //do nothing
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.goals.length !== this.state.goals.length) {
-      const json = JSON.stringify(this.state.goals);
-      localStorage.setItem('goals', json);
-    }
-  }
-
-  componentWillUnmount(){}
   
   render() {
+    const isEnabled = this.state.goal.length > 0;
     return (
       <div className="App">
+        <SimpleStorage parent={this}/>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Goaaal</h1>
         </header>
-        <p className="App-intro">
+        <p className="App-intro" hidden={this.state.goals.length > 0}>
           To get started, add a goal.
         </p>
         <form onSubmit={this.handleSubmit}>
@@ -119,8 +87,9 @@ class App extends Component {
               name="goal" 
               value={this.state.goal} 
               onChange={this.handleChange}
+              placeholder="type a goal..."
             />
-            <button>Add Goal</button>
+            <button disabled={!isEnabled}>Add Goal</button>
         </form>
         <Goals
           goals={this.state.goals}

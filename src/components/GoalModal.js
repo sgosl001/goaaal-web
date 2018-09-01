@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import uuid from 'uuid/v4'
 
 
 class GoalModal extends React.Component {
@@ -24,6 +25,8 @@ class GoalModal extends React.Component {
     }
 
     render() {
+        const { subGoals } = this.props.selectedGoal;
+        const isEnabled = this.state.subGoal.length > 0;
         return(
             <Modal
             isOpen={this.props.isModalVisible}
@@ -40,13 +43,15 @@ class GoalModal extends React.Component {
                             onChange={this.handleSubGoalsChange}
                             placeholder="type a subgoal..."
                         />
-                        <button>add subgoal</button>
+                        <button disabled={!isEnabled}>add subgoal</button>
                     </form>
 
-                    <p> {this.props.selectedGoal.subGoals.length > 0 && this.props.selectedGoal.subGoals.map((subGoal) => 
-                            <li>{subGoal}</li>
-                        )}
-                    </p>
+                    {
+                        subGoals && this.props.selectedGoal.subGoals.map((subGoal) => 
+                            <div 
+                            key={uuid()}>{subGoal}
+                            </div>)
+                    }
 
                     <div>
                         <button onClick={() => this.props.closeModal()}> X </button>
