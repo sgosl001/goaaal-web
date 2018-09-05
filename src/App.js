@@ -14,7 +14,7 @@ class App extends Component {
       goal: '',
       goals: [],
       selectedGoal: '',
-      isModalVisible: false
+      isModalVisible: false,
   };
 
   handleDeleteGoal = (id) => {

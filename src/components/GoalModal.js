@@ -47,9 +47,9 @@ class GoalModal extends React.Component {
                     </form>
 
                     {
-                        subGoals && this.props.selectedGoal.subGoals.map((subGoal) => 
+                        subGoals && this.props.selectedGoal.subGoals.map((subGoal, index) => 
                             <div 
-                            key={uuid()}>{subGoal}
+                            key={this.props.selectedGoal.id}> {index + 1}. {subGoal}
                             </div>)
                     }
 
