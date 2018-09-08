@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import uuid from 'uuid/v4';
 import Goals from './components/Goals';
@@ -14,7 +13,7 @@ class App extends Component {
       goal: '',
       goals: [],
       selectedGoal: '',
-      isModalVisible: false
+      isModalVisible: false,
   };
 
   handleDeleteGoal = (id) => {
@@ -65,6 +64,27 @@ class App extends Component {
       }));
   }
 
+  
+  deleteSubGoal = (id, index) => {
+      let selectedGoal;
+      const prevGoals = this.state.goals.map((goal) => {
+        if (goal.id === id) {
+          selectedGoal = goal;
+          return {
+            ...goal,
+            subGoals: [...goal.subGoals.slice(0,index), ...goal.subGoals.slice(index + 1)]
+          };
+        } else {
+          return goal;
+        }
+      });
+
+      this.setState(() => ({
+        goals: [...prevGoals],
+        selectedGoal
+      }));
+  }
+
   closeModal = () => {
     this.setState(() => ({ selectedGoal: '' }) );
   }
@@ -75,21 +95,23 @@ class App extends Component {
       <div className="App">
         <SimpleStorage parent={this}/>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Goaaal</h1>
         </header>
         <p className="App-intro" hidden={this.state.goals.length > 0}>
           To get started, add a goal.
         </p>
         <form onSubmit={this.handleSubmit}>
-            <input 
+            <input
               type="text" 
               name="goal" 
               value={this.state.goal} 
               onChange={this.handleChange}
               placeholder="type a goal..."
             />
-            <button disabled={!isEnabled}>Add Goal</button>
+            <button className="App-button" 
+              disabled={!isEnabled}>
+                Add Goal
+            </button>
         </form>
         <Goals
           goals={this.state.goals}
@@ -102,6 +124,7 @@ class App extends Component {
           selectedGoal={this.state.selectedGoal}
           closeModal={this.closeModal}
           addSubGoal={this.addSubGoal}
+          deleteSubGoal={this.deleteSubGoal}
         />
       </div>
     );

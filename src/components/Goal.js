@@ -2,14 +2,31 @@ import React from 'react';
 import Modal from 'react-modal';
 
 class Goal extends React.Component {
+    state={
+        completed: false
+    }
+
     render() {
         const { count, id, subGoals, goalText} = this.props;
         return (
             <div>
-                <div onClick={this.handleClick}>
-                    {count}. {goalText}
+                <div>
+                    <div 
+                        onClick={this.handleClick}>
+                        {count}. {goalText}
+                    </div>
+                    <input 
+                        hidden={subGoals.length > 0}
+                        type="checkbox" 
+                        value={this.state.completed} 
+                        onclick={!this.state.completed}>
+                    </input>
                 </div>
-                <button onClick={this.handleRemoveClick}>remove</button>
+                <button
+                    className="App-button" 
+                    onClick={this.handleRemoveClick}>
+                        remove
+                </button>
             </div>
         );
     }

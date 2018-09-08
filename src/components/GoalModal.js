@@ -24,6 +24,11 @@ class GoalModal extends React.Component {
         this.setState(() => ({subGoal: newValue}))
     }
 
+    handleDeleteSubGoal = (e) => {
+        e.preventDefault();
+        this.props.deleteSubGoal(this.props.selectedGoal.id, this.state.subGoal)
+    }
+
     render() {
         const { subGoals } = this.props.selectedGoal;
         const isEnabled = this.state.subGoal.length > 0;
@@ -47,9 +52,14 @@ class GoalModal extends React.Component {
                     </form>
 
                     {
-                        subGoals && this.props.selectedGoal.subGoals.map((subGoal) => 
+                        subGoals && this.props.selectedGoal.subGoals.map((subGoal, index) => 
                             <div 
-                            key={uuid()}>{subGoal}
+                            key={uuid()}> {index + 1}. {subGoal} 
+                            <button 
+                                className="App-button"
+                                onClick={this.handleDeleteSubGoal}
+                            > X
+                            </button>
                             </div>)
                     }
 
