@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import uuid from 'uuid/v4';
 import Goals from './components/Goals';
@@ -75,21 +74,23 @@ class App extends Component {
       <div className="App">
         <SimpleStorage parent={this}/>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Goaaal</h1>
         </header>
         <p className="App-intro" hidden={this.state.goals.length > 0}>
           To get started, add a goal.
         </p>
         <form onSubmit={this.handleSubmit}>
-            <input 
+            <input
               type="text" 
               name="goal" 
               value={this.state.goal} 
               onChange={this.handleChange}
               placeholder="type a goal..."
             />
-            <button disabled={!isEnabled}>Add Goal</button>
+            <button className="App-button" 
+              disabled={!isEnabled}>
+                Add Goal
+            </button>
         </form>
         <Goals
           goals={this.state.goals}

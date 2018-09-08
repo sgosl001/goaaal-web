@@ -22,7 +22,11 @@ class Goal extends React.Component {
                         onclick={!this.state.completed}>
                     </input>
                 </div>
-                <button onClick={this.handleRemoveClick}>remove</button>
+                <button
+                    className="App-button" 
+                    onClick={this.handleRemoveClick}>
+                        remove
+                </button>
             </div>
         );
     }
