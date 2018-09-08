@@ -64,6 +64,27 @@ class App extends Component {
       }));
   }
 
+  
+  deleteSubGoal = (id, index) => {
+      let selectedGoal;
+      const prevGoals = this.state.goals.map((goal) => {
+        if (goal.id === id) {
+          selectedGoal = goal;
+          return {
+            ...goal,
+            subGoals: [...goal.subGoals.slice(0,index), ...goal.subGoals.slice(index + 1)]
+          };
+        } else {
+          return goal;
+        }
+      });
+
+      this.setState(() => ({
+        goals: [...prevGoals],
+        selectedGoal
+      }));
+  }
+
   closeModal = () => {
     this.setState(() => ({ selectedGoal: '' }) );
   }
@@ -103,6 +124,7 @@ class App extends Component {
           selectedGoal={this.state.selectedGoal}
           closeModal={this.closeModal}
           addSubGoal={this.addSubGoal}
+          deleteSubGoal={this.deleteSubGoal}
         />
       </div>
     );
