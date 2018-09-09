@@ -23,7 +23,7 @@ class App extends Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault() 
+    e.preventDefault()
     this.setState((prevState) => ({ goals: prevState.goals.concat({
       goalText: this.state.goal,
       id: uuid(),
@@ -64,7 +64,7 @@ class App extends Component {
       }));
   }
 
-  
+
   deleteSubGoal = (id, index) => {
       let selectedGoal;
       const prevGoals = this.state.goals.map((goal) => {
@@ -88,7 +88,16 @@ class App extends Component {
   closeModal = () => {
     this.setState(() => ({ selectedGoal: '' }) );
   }
-  
+
+  componentDidUpdate(propsPrev, statePrev) {
+    const { goals } = this.state;
+    const { goals:goalsPrev } = statePrev;
+
+    if (goalsPrev !== goals) {
+      console.log('goals changed! goals:', goals);
+    }
+  }
+
   render() {
     const isEnabled = this.state.goal.length > 0;
     return (
@@ -102,13 +111,13 @@ class App extends Component {
         </p>
         <form onSubmit={this.handleSubmit}>
             <input
-              type="text" 
-              name="goal" 
-              value={this.state.goal} 
+              type="text"
+              name="goal"
+              value={this.state.goal}
               onChange={this.handleChange}
               placeholder="type a goal..."
             />
-            <button className="App-button" 
+            <button className="App-button"
               disabled={!isEnabled}>
                 Add Goal
             </button>
