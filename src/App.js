@@ -48,11 +48,14 @@ class App extends Component {
     let selectedGoal;
     const nextGoals = this.state.goals.map((goal) => {
       if (goal.id === id) {
-        selectedGoal = goal;
-        return {
+
+        selectedGoal = {
           ...goal,
           subGoals: [...goal.subGoals, subgoal]
         };
+
+        return selectedGoal;
+
       } else {
         return goal;
       }
@@ -69,11 +72,14 @@ class App extends Component {
       let selectedGoal;
       const prevGoals = this.state.goals.map((goal) => {
         if (goal.id === id) {
-          selectedGoal = goal;
-          return {
+
+          selectedGoal = {
             ...goal,
             subGoals: [...goal.subGoals.slice(0,index), ...goal.subGoals.slice(index + 1)]
           };
+
+          return selectedGoal;
+
         } else {
           return goal;
         }
