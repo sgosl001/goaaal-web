@@ -26,7 +26,7 @@ class GoalModal extends React.Component {
 
     handleDeleteSubGoal = (e) => {
         e.preventDefault();
-        this.props.deleteSubGoal(this.props.selectedGoal.id, this.state.subGoal)
+        this.props.deleteSubGoal(this.props.selectedGoal.id, index)
     }
 
     render() {

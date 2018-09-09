@@ -38,9 +38,7 @@ class App extends Component {
   }
 
   selectGoal = (id) => {
-    const selectedGoal = this.state.goals.find((goal) => {
-      return goal.id === id;
-    });
+    const selectedGoal = this.state.goals.find(goal => goal.id === id); 
     this.setState(() => ({ selectedGoal }));
   }
 
@@ -62,7 +60,7 @@ class App extends Component {
     });
 
     this.setState(() => ({
-        goals: [ ...nextGoals ],
+        goals: nextGoals,
         selectedGoal
       }));
   }
@@ -75,7 +73,7 @@ class App extends Component {
 
           selectedGoal = {
             ...goal,
-            subGoals: [...goal.subGoals.slice(0,index), ...goal.subGoals.slice(index + 1)]
+            subGoals: goal.subGoals.filter((subGoal, subGoalIndex) => subGoalIndex !== index)
           };
 
           return selectedGoal;
@@ -96,7 +94,7 @@ class App extends Component {
   }
   
   render() {
-    const isEnabled = this.state.goal.length > 0;
+    const isDisabled = !this.state.goals.length;
     return (
       <div className="App">
         <SimpleStorage parent={this}/>
@@ -115,7 +113,7 @@ class App extends Component {
               placeholder="type a goal..."
             />
             <button className="App-button" 
-              disabled={!isEnabled}>
+              disabled={isDisabled}>
                 Add Goal
             </button>
         </form>
