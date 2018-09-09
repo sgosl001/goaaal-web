@@ -19,7 +19,7 @@ class Goal extends React.Component {
                         hidden={subGoals.length > 0}
                         type="checkbox" 
                         value={this.state.completed} 
-                        onclick={!this.state.completed}>
+                        onClick={!this.state.completed}>
                     </input>
                 </div>
                 <button

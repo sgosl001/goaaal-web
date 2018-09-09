@@ -73,7 +73,7 @@ class App extends Component {
 
           selectedGoal = {
             ...goal,
-            subGoals: goal.subGoals.filter((subGoal, id) => id !== subGoalId)
+            subGoals: goal.subGoals.filter((subGoal) => subGoal.id !== subGoalId)
           };
 
           return selectedGoal;
@@ -94,7 +94,6 @@ class App extends Component {
   }
   
   render() {
-    const isDisabled = !this.state.goals.length;
     return (
       <div className="App">
         <SimpleStorage parent={this}/>
@@ -113,7 +112,7 @@ class App extends Component {
               placeholder="type a goal..."
             />
             <button className="App-button" 
-              disabled={isDisabled}>
+              disabled={!this.state.goal}>
                 Add Goal
             </button>
         </form>
