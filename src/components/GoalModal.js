@@ -4,7 +4,7 @@ import uuid from 'uuid/v4'
 
 
 class GoalModal extends React.Component {
-
+    
     state = {
         subGoal: ''
     }
@@ -29,15 +29,6 @@ class GoalModal extends React.Component {
         this.props.deleteSubGoal(this.props.selectedGoal.id, this.state.subGoal)
     }
 
-    componentDidUpate(propsPrev, statePrev) {
-        const { selectedGoal } = this.props;
-        const { selectedGoal:selectedGoalPrev } = propsPrev;
-
-        if (selectedGoal !== selectedGoalPrev) {
-            console.log('selectedGoal changed in modal! selectedGoal:', selectedGoal);
-        }
-    }
-
     render() {
         const { subGoals } = this.props.selectedGoal;
         const isEnabled = this.state.subGoal.length > 0;
@@ -50,9 +41,9 @@ class GoalModal extends React.Component {
                     <h1> {this.props.selectedGoal.goalText} </h1>
 
                     <form onSubmit={this.handleSubmit}>
-                        <input
-                            type="text"
-                            name="subgoal"
+                        <input 
+                            type="text" 
+                            name="subgoal" 
                             value={this.state.subGoal}
                             onChange={this.handleSubGoalsChange}
                             placeholder="type a subgoal..."
@@ -61,10 +52,10 @@ class GoalModal extends React.Component {
                     </form>
 
                     {
-                        subGoals && this.props.selectedGoal.subGoals.map((subGoal, index) =>
-                            <div
-                            key={uuid()}> {index + 1}. {subGoal}
-                            <button
+                        subGoals && this.props.selectedGoal.subGoals.map((subGoal, index) => 
+                            <div 
+                            key={uuid()}> {index + 1}. {subGoal} 
+                            <button 
                                 className="App-button"
                                 onClick={this.handleDeleteSubGoal}
                             > X
