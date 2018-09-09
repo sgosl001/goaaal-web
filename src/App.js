@@ -66,14 +66,14 @@ class App extends Component {
   }
 
   
-  deleteSubGoal = (id, index) => {
+  deleteSubGoal = (goalId, subGoalId) => {
       let selectedGoal;
-      const prevGoals = this.state.goals.map((goal) => {
-        if (goal.id === id) {
+      const currentGoals = this.state.goals.map((goal) => {
+        if (goal.id === goalId) {
 
           selectedGoal = {
             ...goal,
-            subGoals: goal.subGoals.filter((subGoal, subGoalIndex) => subGoalIndex !== index)
+            subGoals: goal.subGoals.filter((subGoal, id) => id !== subGoalId)
           };
 
           return selectedGoal;
@@ -84,7 +84,7 @@ class App extends Component {
       });
 
       this.setState(() => ({
-        goals: [...prevGoals],
+        goals: [...currentGoals],
         selectedGoal
       }));
   }

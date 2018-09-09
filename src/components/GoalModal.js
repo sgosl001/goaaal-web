@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import SubGoal from './SubGoal'
 import uuid from 'uuid/v4'
 
 
@@ -12,7 +13,11 @@ class GoalModal extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.addSubGoal(this.props.selectedGoal.id, this.state.subGoal);
+        this.props.addSubGoal(this.props.selectedGoal.id, {
+            id: uuid(),
+            text: this.state.subGoal,
+            completed: false
+        });
 
         this.setState(() => ({
             subGoal: ''
@@ -22,11 +27,6 @@ class GoalModal extends React.Component {
     handleSubGoalsChange = (e) => {
         const newValue = e.target.value;
         this.setState(() => ({subGoal: newValue}))
-    }
-
-    handleDeleteSubGoal = (e) => {
-        e.preventDefault();
-        this.props.deleteSubGoal(this.props.selectedGoal.id, index)
     }
 
     render() {
@@ -50,19 +50,16 @@ class GoalModal extends React.Component {
                         />
                         <button disabled={!isEnabled}>add subgoal</button>
                     </form>
-
                     {
-                        subGoals && this.props.selectedGoal.subGoals.map((subGoal, index) => 
-                            <div 
-                            key={uuid()}> {index + 1}. {subGoal} 
-                            <button 
-                                className="App-button"
-                                onClick={this.handleDeleteSubGoal}
-                            > X
-                            </button>
-                            </div>)
+                        subGoals && subGoals.map((subGoal, index) => <SubGoal 
+                            key={subGoal.id}
+                            count={index + 1} 
+                            id={subGoal.id}
+                            text={subGoal.text}
+                            deleteSubGoal={this.props.deleteSubGoal}
+                            selectedGoal={this.props.selectedGoal} 
+                            />)
                     }
-
                     <div>
                         <button onClick={() => this.props.closeModal()}> X </button>
                     </div>
