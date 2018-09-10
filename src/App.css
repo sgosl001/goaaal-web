@@ -3,10 +3,11 @@
 }
 
 .App-header {
-  background-color: #33cc33;
+  background-color: #16D9AB;
   height: 120px;
   padding: 30px;
   color: white;
+  text-shadow: 2px 2px black;
   margin-bottom: 20px;
 }
 
@@ -15,7 +16,7 @@
 }
 
 .App-button {
-  background-color:#33cc33;
+  background-color:#16D9AB;
   color: white;
 }
 
@@ -23,7 +24,21 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.Container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.Container-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
