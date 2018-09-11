@@ -9,26 +9,34 @@ class Goal extends React.Component {
     render() {
         const { count, id, subGoals, goalText} = this.props;
         return (
-            <div>
-                <div>
-                    <div 
-                        onClick={this.handleClick}>
-                        {count}. {goalText}
+            <div className="Container">
+                <div style={{
+                    display: "flex",
+                    alignItems: "center"
+                }}>
+                    <div className="checkbox"
+                        hidden={subGoals.length > 0} 
+                        onClick={this.handleCheckboxClick}
+                    >
+                        {this.state.completed && <i className="material-icons checkmark">done</i>}
                     </div>
-                    <input 
-                        hidden={subGoals.length > 0}
-                        type="checkbox" 
-                        value={this.state.completed} 
-                        onClick={!this.state.completed}>
-                    </input>
+                    <div className="goal-text" onClick={this.handleClick}>
+                        {goalText}
+                    </div>
                 </div>
                 <button
                     className="App-button" 
                     onClick={this.handleRemoveClick}>
-                        remove
+                        <i className="material-icons"> delete_forever </i>
                 </button>
             </div>
         );
+    }
+
+    handleCheckboxClick = () => {
+        this.setState((prevState) => ({
+            completed: !prevState.completed
+        }));
     }
     
     handleRemoveClick = () => {

@@ -11,12 +11,17 @@ class SubGoal extends React.Component {
     render() {
         console.log(this.props.completed)
         return(
-            <div>
-                {this.props.count}. {this.props.text}
-                <input
-                    type="checkbox"
-                    onClick={!this.props.completed}
-                />
+            <div className="subgoal-container">
+                <div style={{
+                    display: 'flex'
+                }}
+                >
+                    <input
+                        type="checkbox"
+                        onClick={!this.props.completed}
+                    />
+                    <div>{this.props.text}</div>
+                </div>
                 <button 
                 className="App-button"
                 onClick={this.handleDeleteSubGoal}

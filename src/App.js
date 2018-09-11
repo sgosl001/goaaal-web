@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './styles/App.css'
 import uuid from 'uuid/v4';
 import Goals from './components/Goals';
 import GoalModal from './components/GoalModal';
@@ -95,40 +95,45 @@ class App extends Component {
   
   render() {
     return (
-      <div className="App">
-        <SimpleStorage parent={this}/>
+      <div>
         <header className="App-header">
           <h1 className="App-title">Goaaal</h1>
         </header>
-        <p className="App-intro" hidden={this.state.goals.length > 0}>
-          To get started, add a goal.
-        </p>
-        <form onSubmit={this.handleSubmit}>
-            <input
-              type="text" 
-              name="goal" 
-              value={this.state.goal} 
-              onChange={this.handleChange}
-              placeholder="type a goal..."
-            />
-            <button className="App-button" 
-              disabled={!this.state.goal}>
-                Add Goal
-            </button>
-        </form>
-        <Goals
-          goals={this.state.goals}
-          handleDeleteGoal={this.handleDeleteGoal}
-          handleSelectGoal={this.selectGoal}
-          handleSubmit={this.handleSubmit}
-        />
-        <GoalModal
-          isModalVisible={!!this.state.selectedGoal}
-          selectedGoal={this.state.selectedGoal}
-          closeModal={this.closeModal}
-          addSubGoal={this.addSubGoal}
-          deleteSubGoal={this.deleteSubGoal}
-        />
+        <div className="App">
+          <SimpleStorage parent={this}/>
+          <p className="App-intro" hidden={this.state.goals.length > 0}>
+            To get started, add a goal.
+          </p>
+          <form className="add-goal-form" onSubmit={this.handleSubmit}>
+              <input
+                className="add-goal"
+                type="text" 
+                name="goal" 
+                value={this.state.goal} 
+                onChange={this.handleChange}
+                placeholder="Type a goal..."
+              />
+              <button 
+                className="App-button add-goal__button"
+                disabled={!this.state.goal}
+              >
+                  <i class="material-icons">add</i>
+              </button>
+          </form>
+          <Goals
+            goals={this.state.goals}
+            handleDeleteGoal={this.handleDeleteGoal}
+            handleSelectGoal={this.selectGoal}
+            handleSubmit={this.handleSubmit}
+          />
+          <GoalModal
+            isModalVisible={!!this.state.selectedGoal}
+            selectedGoal={this.state.selectedGoal}
+            closeModal={this.closeModal}
+            addSubGoal={this.addSubGoal}
+            deleteSubGoal={this.deleteSubGoal}
+          />
+        </div>
       </div>
     );
   }

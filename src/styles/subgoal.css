@@ -1,0 +1,9 @@
+.subgoal-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+  }
+  
+  .subgoal-form {
+    margin-bottom: 10px;
+  }

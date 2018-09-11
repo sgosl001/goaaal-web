@@ -1,7 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
-import SubGoal from './SubGoal'
-import uuid from 'uuid/v4'
+import SubGoal from './SubGoal';
+import uuid from 'uuid/v4';
+import '../styles/subgoal.css';
 
 
 class GoalModal extends React.Component {
@@ -38,9 +39,10 @@ class GoalModal extends React.Component {
             contentLabel="test"
             >
                 <div>
+                    <button onClick={() => this.props.closeModal()}> X </button>
                     <h1> {this.props.selectedGoal.goalText} </h1>
 
-                    <form onSubmit={this.handleSubmit}>
+                    <form className="subgoal-form" onSubmit={this.handleSubmit}>
                         <input 
                             type="text" 
                             name="subgoal" 
@@ -60,9 +62,6 @@ class GoalModal extends React.Component {
                             selectedGoal={this.props.selectedGoal} 
                             />)
                     }
-                    <div>
-                        <button onClick={() => this.props.closeModal()}> X </button>
-                    </div>
                 </div>
             </Modal>
         )
