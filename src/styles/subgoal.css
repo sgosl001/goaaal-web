@@ -1,9 +1,50 @@
+.subgoal {
+  border: none;
+  height: 100%;
+  padding: 0 3px;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+}
+
 .subgoal-container {
     display: flex;
     justify-content: space-between;
     max-width: 300px;
+    border: 4px solid #eee;
+    border-top: none;
+    border-left: none;
   }
-  
+
+  .subgoal-checkbox {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.808);
+    border: 4px solid #eee;
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
   .subgoal-form {
-    margin-bottom: 10px;
+    border: 4px solid #eee;
+    width: 300px;
+    height: 54px;
+    justify-content: space-between;
+  }
+
+  .subgoal__button {
+    width: 42px;
+    background-color: #16D9AB;
+    color: white;
+    cursor: pointer;
+  }
+
+  .subgoal-remove {
+    width: 42px;
+    height: 50px;
+    cursor: pointer;
   }

@@ -5,9 +5,6 @@ import Goals from './components/Goals';
 import GoalModal from './components/GoalModal';
 import SimpleStorage from "react-simple-storage";
 
-//TODO create percentage for goal completion
-//TODO add alerts
-
 class App extends Component {
   state = {
       goal: '',
@@ -117,7 +114,7 @@ class App extends Component {
                 className="App-button add-goal__button"
                 disabled={!this.state.goal}
               >
-                  <i class="material-icons">add</i>
+                  <i className="material-icons">add</i>
               </button>
           </form>
           <Goals
