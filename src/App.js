@@ -89,6 +89,18 @@ class App extends Component {
   closeModal = () => {
     this.setState(() => ({ selectedGoal: '' }) );
   }
+
+  ProgressBar = () => {
+    return (
+      <div className="progress-bar">
+      
+      </div>
+    )
+  }
+
+  Filler = () => {
+    return <div className="filler"/>
+  }
   
   render() {
     return (

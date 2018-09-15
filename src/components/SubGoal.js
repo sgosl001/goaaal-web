@@ -32,7 +32,7 @@ class SubGoal extends React.Component {
                     >
                         {this.state.subGoalComplete && <i className="material-icons checkmark">done</i>}
                     </div>
-                    <div>{this.props.text}</div>
+                    <div className="subgoal-text">{this.props.text}</div>
                 </div>
                 <button 
                 className="App-button subgoal-remove"

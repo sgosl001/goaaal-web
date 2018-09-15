@@ -6,10 +6,17 @@
   border-bottom: 2px solid #eee;
 }
 
+.subgoal-text {
+  height: 100%;
+  font-size: 20px;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
 .subgoal-container {
     display: flex;
     justify-content: space-between;
-    max-width: 300px;
+    max-width: 600px;
     border: 4px solid #eee;
     border-top: none;
     border-left: none;
@@ -30,8 +37,9 @@
   }
 
   .subgoal-form {
+    display: flex;
     border: 4px solid #eee;
-    width: 300px;
+    width: 600px;
     height: 54px;
     justify-content: space-between;
   }
@@ -47,4 +55,11 @@
     width: 42px;
     height: 50px;
     cursor: pointer;
+  }
+
+  .subgoal-title {
+    background-color: #16D9AB;
+    color: white;
+    width: 600px;
+    text-align: center;
   }

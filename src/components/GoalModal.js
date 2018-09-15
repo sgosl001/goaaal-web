@@ -40,12 +40,12 @@ class GoalModal extends React.Component {
             >
                 <div>
                     <button className="App-button" onClick={() => this.props.closeModal()}> X </button>
-                    <h1> {this.props.selectedGoal.goalText} </h1>
+                    <h1 className="subgoal-title"> {this.props.selectedGoal.goalText} </h1>
 
                     <form className="subgoal-form" onSubmit={this.handleSubmit}>
                         <input 
                             type="text" 
-                            className="subgoal subgoal-text" 
+                            className="subgoal" 
                             value={this.state.subGoal}
                             onChange={this.handleSubGoalsChange}
                             placeholder="type a subgoal..."
@@ -62,7 +62,7 @@ class GoalModal extends React.Component {
                             text={subGoal.text}
                             deleteSubGoal={this.props.deleteSubGoal}
                             selectedGoal={this.props.selectedGoal} 
-                            />)
+                        />)
                     }
                 </div>
             </Modal>
