@@ -3,19 +3,13 @@ import uuid from 'uuid/v4'
 
 class SubGoal extends React.Component {
 
-    state={
-        subGoalComplete: false
-    }
-
     handleDeleteSubGoal = (e) => {
         e.preventDefault();
         this.props.deleteSubGoal(this.props.selectedGoal.id, this.props.id)
     }
 
     handleSubGoalCheckbox = () => {
-        this.setState((prevState) => ({
-            subGoalComplete: !prevState.subGoalComplete
-        }));
+        this.props.toggleSubGoalComplete(this.props.selectedGoal.id, this.props.id)
     }
 
     render() {
@@ -30,7 +24,7 @@ class SubGoal extends React.Component {
                         className="subgoal-checkbox"
                         onClick={this.handleSubGoalCheckbox}
                     >
-                        {this.state.subGoalComplete && <i className="material-icons checkmark">done</i>}
+                        {this.props.completed && <i className="material-icons checkmark">done</i>}
                     </div>
                     <div className="subgoal-text">{this.props.text}</div>
                 </div>

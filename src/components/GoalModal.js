@@ -37,11 +37,15 @@ class GoalModal extends React.Component {
             <Modal
             isOpen={this.props.isModalVisible}
             contentLabel="test"
+            className="modal"
             >
                 <div>
-                    <button className="App-button" onClick={() => this.props.closeModal()}> X </button>
-                    <h1 className="subgoal-title"> {this.props.selectedGoal.goalText} </h1>
-
+                    <div style={{
+                        display: "flex"
+                    }}>
+                        <h1 className="subgoal-title"> {this.props.selectedGoal.goalText} </h1>
+                        <button className="close-modal" onClick={() => this.props.closeModal()}> X </button>
+                    </div>
                     <form className="subgoal-form" onSubmit={this.handleSubmit}>
                         <input 
                             type="text" 
@@ -50,18 +54,21 @@ class GoalModal extends React.Component {
                             onChange={this.handleSubGoalsChange}
                             placeholder="type a subgoal..."
                         />
-                        <button className="subgoal subgoal__button" disabled={!isEnabled}>
+                        <button className="subgoal__button" disabled={!isEnabled}>
                             <i className="material-icons">add</i>
                         </button>
                     </form>
                     {
-                        subGoals && subGoals.map((subGoal, index) => <SubGoal 
+                        subGoals && subGoals.map((subGoal, index) => 
+                        <SubGoal 
                             key={subGoal.id}
                             count={index + 1} 
                             id={subGoal.id}
                             text={subGoal.text}
                             deleteSubGoal={this.props.deleteSubGoal}
                             selectedGoal={this.props.selectedGoal} 
+                            toggleSubGoalComplete={this.props.toggleSubGoalComplete}
+                            completed={subGoal.completed}
                         />)
                     }
                 </div>

@@ -2,8 +2,8 @@
   border: none;
   height: 100%;
   padding: 0 3px;
+  max-width: 580px;
   font-size: 20px;
-  border-bottom: 2px solid #eee;
 }
 
 .subgoal-text {
@@ -47,6 +47,7 @@
   .subgoal__button {
     width: 42px;
     background-color: #16D9AB;
+    border: none;
     color: white;
     cursor: pointer;
   }
@@ -59,7 +60,15 @@
 
   .subgoal-title {
     background-color: #16D9AB;
+    margin: 0;
     color: white;
     width: 600px;
     text-align: center;
+  }
+
+  .close-modal {
+    background: rgba(255, 56, 56, 0.904);
+    border: none;
+    color: white;
+    width: 50px;
   }

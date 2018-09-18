@@ -13,6 +13,33 @@ class App extends Component {
       isModalVisible: false,
   };
 
+  toggleSubGoalComplete = (goalId, subGoalId) => {
+    let selectedGoal;
+    const nextGoals = this.state.goals.map((goal) => {
+      if (goalId === goal.id) {
+        selectedGoal = {
+          ...goal,
+          subGoals: goal.subGoals.map((subgoal) => {
+            if (subGoalId === subgoal.id) {
+              return {
+                ...subgoal,
+                completed: !subgoal.completed
+              };
+            }
+          })
+        };
+        return selectedGoal;
+      } else {
+        return goal;
+      }
+    });
+
+    this.setState(() => ({
+      goals: nextGoals,
+      selectedGoal
+    }))
+  }
+
   handleDeleteGoal = (id) => {
     this.setState((prevState) => ({
       goals: prevState.goals.filter((goal) => goal.id !== id)
@@ -90,18 +117,6 @@ class App extends Component {
     this.setState(() => ({ selectedGoal: '' }) );
   }
 
-  ProgressBar = () => {
-    return (
-      <div className="progress-bar">
-      
-      </div>
-    )
-  }
-
-  Filler = () => {
-    return <div className="filler"/>
-  }
-  
   render() {
     return (
       <div>
@@ -141,6 +156,7 @@ class App extends Component {
             closeModal={this.closeModal}
             addSubGoal={this.addSubGoal}
             deleteSubGoal={this.deleteSubGoal}
+            toggleSubGoalComplete={this.toggleSubGoalComplete}
           />
         </div>
       </div>

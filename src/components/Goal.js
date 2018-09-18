@@ -2,17 +2,20 @@ import React from 'react';
 import Modal from 'react-modal';
 
 class Goal extends React.Component {
-    state={
-        completed: false
+    state = {
+        completed: false,
+        width: 0
     }
 
     render() {
         const { count, id, subGoals, goalText} = this.props;
+        this.getProgressBarWidth();
         return (
             <div className="Container">
                 <div style={{
                     display: "flex",
-                    alignItems: "center"
+                    alignItems: "center",
+                    width: "100%"
                 }}>
                     <div className="checkbox"
                         hidden={subGoals.length > 0} 
@@ -20,8 +23,23 @@ class Goal extends React.Component {
                     >
                         {this.state.completed && <i className="material-icons checkmark">done</i>}
                     </div>
-                    <div className="goal-text" onClick={this.handleClick}>
-                        {goalText}
+                    <div style={{
+                        width: "100%"
+                    }}>
+                        <div className="goal-text" onClick={this.handleClick}>
+                            {goalText}
+                        </div>
+                        <div style={{
+                            maxWidth: "100%",
+                            background: "red"
+                        }}>
+                            <div style={{
+                                background: "#16D9AB",
+                                height: "10px",
+                                width: this.state.width + "%"
+                            }}>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button
@@ -31,6 +49,19 @@ class Goal extends React.Component {
                 </button>
             </div>
         );
+    }
+
+    getProgressBarWidth = () => {
+        const { subGoals } = this.props;
+        let completed = 0;
+        for (let i = 0; i < subGoals.length; i++) {
+            completed++;
+        }
+        const width = (completed / subGoals.length) * 100;
+        console.log(width);
+        this.setState(() => {(
+            width
+        )});
     }
 
     handleCheckboxClick = () => {
